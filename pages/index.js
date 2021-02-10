@@ -1,31 +1,22 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function Home () {
-    fetch("https://www.instagram.com/brunoginciene/?__a=1")
-    .then(
-        function(response) {
-        if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
-            response.status);
-            return;
-        }
+    //"https://www.instagram.com/$otherPage/?__a=1"
+    const [profile, setProfile] = useState([])
 
-        // Examine the text in the response
-        response.json().then(function(data) {
-            console.log(data);
-        });
-        }
-    )
-    .catch(function(err) {
-        console.log('Fetch Error :-S', err);
-    });
-    
+    useEffect(async () => {
+        const response = await fetch('https://api.github.com/') 
+        const data = await response.json()
+        setProfile(data)
+    }, [])
+
     return (
         <div>
-            <h1>Teste</h1>
+            <h1>{profile.current_user_url}</h1>
+            <h2>Testando: {profile.current_user_url}</h2>
         </div>
     )
-    //"https://www.instagram.com/$otherPage/?__a=1"
+    
 }
 
 export default Home
